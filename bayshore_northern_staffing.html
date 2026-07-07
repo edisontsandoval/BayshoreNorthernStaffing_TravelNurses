@@ -130,24 +130,10 @@ ul{list-style:none}
   background:linear-gradient(90deg,rgba(11,67,91,.6) 0%,rgba(11,67,91,.4) 35%,rgba(11,67,91,.08) 65%,rgba(11,67,91,0) 100%);
   pointer-events:none;
 }
-/* Placeholder shown when no video file present */
-.hero-video-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0B435B 0%,#1a6a8a 40%,#2797B6 100%)}
-.hero-video-placeholder::after{content:'[ Hero Video Placeholder — replace with your .mp4 file in Claude Code ]';font-size:12px;color:rgba(255,255,255,.3);max-width:280px;text-align:center;line-height:1.7;font-family:var(--font-b)}
 /* Deep overlay for text legibility */
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(100deg,rgba(11,67,91,.82) 0%,rgba(11,67,91,.55) 60%,rgba(11,67,91,.2) 100%)}
 /* Decorative wave watermark */
 .hero-waves{position:absolute;right:-40px;bottom:-20px;pointer-events:none}
-/* Wave placeholder shown until real graphic uploaded in Claude Code */
-.hero-wave-ph{
-  width:560px;height:260px;
-  border:2px dashed rgba(255,255,255,.18);
-  border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;color:rgba(255,255,255,.25);font-family:var(--font-b);
-  text-align:center;line-height:1.6;letter-spacing:.03em;
-}
-.hero-wave-ph::after{content:'[ Bayshore Wave Graphic — upload in Claude Code ]'}
-#heroWaveGraphic[src]:not([src=""]) ~ .hero-wave-ph{display:none}
 
 /* Hero — Bayshore Northern Staffing logo area */
 .hero-bns-logo-ph{margin-bottom:24px}
@@ -774,8 +760,6 @@ section{padding:88px 0}
          alt=""
          style="width:760px;opacity:.12;display:block;"
          aria-hidden="true">
-    <!-- Placeholder outline shown until real graphic is swapped in -->
-    <div class="hero-wave-ph" aria-hidden="true"></div>
   </div>
 
   <div class="hero-content">
@@ -1352,9 +1336,9 @@ section{padding:88px 0}
         <div class="n-img" role="img" aria-label="Travel nurse story" style="background:url('Northern Staffing Stock Image.png') center/cover no-repeat;border:none;color:transparent;"></div>
         <div class="n-body">
           <p class="n-tag">Nurse Stories</p>
-          <h3>Why Travel Nurses Choose Remote and Northern Assignments with Bayshore</h3>
+          <h3>Most Rewarding Nursing Assignment in all of Canada</h3>
           <p>Hear directly from our nurses about the professional growth, adventure, and sense of purpose that northern assignments offer.</p>
-          <a href="#" class="n-link">Read more</a>
+          <a href="https://www.bayshore.ca/resources/most-rewarding-nursing-assignment-in-all-of-canada/" target="_blank" rel="noopener" class="n-link">Read more</a>
         </div>
       </article>
     </div>
@@ -1376,7 +1360,7 @@ section{padding:88px 0}
           <div class="t-stars" aria-label="5 stars">
             <span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span>
           </div>
-          <p class="t-quote">"I learned more in one northern contract than in three years at a city hospital. The autonomy, the community, the landscape: I was hooked from week one. I've now done five contracts with Bayshore Northern Staffing and I'm already planning my sixth."</p>
+          <p class="t-quote">"The autonomy, the community, the landscape: I was hooked from week one. Working up north has grown my confidence and my skills in ways I never expected. I've now done five contracts with Bayshore Northern Staffing and I'm already planning my sixth."</p>
           <div class="t-author">
             <div class="t-avatar" aria-hidden="true">SR</div>
             <div>
