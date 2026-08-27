@@ -495,6 +495,7 @@ section{padding:88px 0}
   padding:32px 28px 28px;
   position:relative;
   transition:box-shadow .2s,transform .2s;
+  display:flex;flex-direction:column;
 }
 .t-card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
 /* Large quote mark */
@@ -508,7 +509,19 @@ section{padding:88px 0}
 .t-stars{display:flex;gap:3px;margin-bottom:14px}
 .t-star{color:var(--cta);font-size:14px}
 .t-quote{font-size:15px;color:var(--text-body);line-height:1.78;font-style:italic;margin-bottom:20px}
-.t-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--silver-lt)}
+/* Long quotes clamp to a consistent depth so one outlier can't stretch every card */
+.t-quote{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:14;line-clamp:14;overflow:hidden}
+.t-card.q-open .t-quote{-webkit-line-clamp:unset;line-clamp:unset;overflow:visible}
+.t-more{
+  display:none;align-self:flex-start;
+  background:none;border:none;padding:0;margin:-8px 0 18px;
+  font-family:var(--font-b);font-size:12.5px;font-weight:700;
+  color:var(--b-mid);cursor:pointer;letter-spacing:.02em;
+}
+.t-more:hover{color:var(--b-deep);text-decoration:underline}
+.t-card.has-more .t-more{display:inline-block}
+/* Attribution sits at the card floor, so leftover space reads as padding */
+.t-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--silver-lt);margin-top:auto}
 .t-avatar{
   width:42px;height:42px;border-radius:50%;
   background:linear-gradient(135deg,var(--b-deep),var(--b-mid));
@@ -1754,6 +1767,36 @@ if ('IntersectionObserver' in window) {
   var cards = Array.prototype.slice.call(track.querySelectorAll('.t-card'));
   var current = 0;
 
+  // Reveal a "Read more" toggle only on quotes long enough to be clamped
+  cards.forEach(function(card) {
+    var quote = card.querySelector('.t-quote');
+    if (!quote) return;
+
+    var btn = document.createElement('button');
+    btn.className = 't-more';
+    btn.type = 'button';
+    btn.textContent = 'Read more';
+    btn.setAttribute('aria-expanded', 'false');
+    quote.insertAdjacentElement('afterend', btn);
+
+    btn.addEventListener('click', function() {
+      var open = card.classList.toggle('q-open');
+      btn.textContent = open ? 'Show less' : 'Read more';
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    card.checkClamp = function() {
+      if (card.classList.contains('q-open')) return;
+      card.classList.toggle('has-more', quote.scrollHeight > quote.clientHeight + 2);
+    };
+    card.checkClamp();
+  });
+
+  function refreshClamps() {
+    cards.forEach(function(c) { if (c.checkClamp) c.checkClamp(); });
+  }
+  window.addEventListener('load', refreshClamps);
+
   function getPerView() {
     return window.innerWidth <= 600 ? 1 : window.innerWidth <= 900 ? 2 : 3;
   }
@@ -1822,6 +1865,7 @@ if ('IntersectionObserver' in window) {
     resizeTimer = setTimeout(function() {
       current = 0;
       var pv = getPerView();
+      refreshClamps();
       buildDots(pv);
       goTo(0, pv);
     }, 150);
